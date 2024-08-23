@@ -9,6 +9,8 @@ function Temp() {
       <div>
          <div>This is the chat page</div>
          <Chat />
+
+         
       </div>
    );
 }

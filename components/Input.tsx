@@ -5,16 +5,15 @@ import { octokit } from "@/octokit-config";
 import { headers } from "next/headers";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function InputComponent() {
-   return (
-         <Input />
-   );
+   return <Input />;
 }
 
 function Input() {
    const [url, setUrl] = useRecoilState(urlAtom);
-   const setData = useSetRecoilState(dataContextAtom);
+   const [data, setData] = useRecoilState(dataContextAtom);
    const router = useRouter();
 
    async function fetchGhData(url: string) {
@@ -54,15 +53,23 @@ function Input() {
          ...prev,
          user: userData,
          stargazers: userStargazer,
-         events: userEvents,
+         // events: userEvents,
       }));
 
-      console.log("Set state with: ", {
-         user: userData,
-         stargazers: userStargazer,
-         events: userEvents,
-      });
-      console.log("done");
+
+      // const res = axios.post(
+      //    // "https://temp-workers.aruparekh2.workers.dev/",
+      //    "http://localhost:8787",
+      //    {
+      //       memoryData: {
+      //          user: userData,
+      //          stargazers: userStargazer,
+      //          events: userEvents,
+      //       },
+      //    }
+      // );
+      // console.log(res);
+
       router.push("/chat");
    }
    return (

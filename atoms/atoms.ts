@@ -10,6 +10,6 @@ export const dataContextAtom = atom({
    default: {
       user: {},
       stargazers: [],
-      events: [],
+      // events: [],
    },
 });
