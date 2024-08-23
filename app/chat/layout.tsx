@@ -9,9 +9,11 @@ export default function ChatLayout({
             Chat threads
          </div>
          <div className='divider divider-horizontal'></div>
-         <div className='card bg-base-300 w-[80%] rounded-box grid h-full p-10 relative'>
-            content
-            <input className='input input-bordered absolute left-0 right-0 mx-10 bottom-10'></input>
+         <div className='card bg-base-300 w-[80%] rounded-box flex flex-col gap-10  h-full p-10 relative'>
+            <h1 className='text-7xl text-center h-min bg-gradient-to-b from-base-content to-base-100 inline-block text-transparent bg-clip-text'>
+               Talk with your GitHub Profile
+            </h1>
+            {children}
          </div>
       </div>
    );
