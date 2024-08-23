@@ -23,7 +23,9 @@ export default function ChatInput() {
          }
       );
 
-      console.log(res);
+
+
+      // console.log(res);
       setResponse(res.data.response);
       setPrompt("");
    }
