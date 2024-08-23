@@ -13,6 +13,7 @@ export default function ChatInput() {
    async function handleSubmit(e: FormEvent) {
       e.preventDefault();
 
+      setResponse("loading");
       const res = await axios.post<string, AxiosResponse<string>>(
          // "https://temp-workers.aruparekh2.workers.dev",
          "http://localhost:8787",
@@ -24,6 +25,7 @@ export default function ChatInput() {
 
       console.log(res);
       setResponse(res.data.response);
+      setPrompt("");
    }
 
    console.log("Prompt is: ", prompt);
