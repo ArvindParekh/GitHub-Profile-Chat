@@ -5,7 +5,7 @@ export const urlAtom = atom({
    default: "",
 });
 
-export const dataContextAtom = atom({
+export const dataContextAtom = atom<GhData>({
    key: "dataContextAtom",
    default: {
       user: {},

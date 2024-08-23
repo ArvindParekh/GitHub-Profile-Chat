@@ -1,7 +1,7 @@
 "use client";
 
 import { dataContextAtom } from "@/atoms/atoms";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useRecoilValue } from "recoil";
 
 export default function Chat() {
