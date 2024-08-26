@@ -79,16 +79,19 @@ app.post("/updateDb", async (c) => {
       try {
          let value = await c.env.DB.put(
             `userData: ${userName}`,
-            JSON.stringify(userData)
+            JSON.stringify(userData),
+            {expirationTtl: 3600}
          );
          console.log(value);
          await c.env.DB.put(
             `userStargazers: ${userName}`,
-            JSON.stringify(userStargazers)
+            JSON.stringify(userStargazers),
+            {expirationTtl: 3600}
          );
          await c.env.DB.put(
             `userEvents: ${userName}`,
-            JSON.stringify(userEvents)
+            JSON.stringify(userEvents),
+            {expirationTtl: 3600}
          );
          // await c.env.DB.put(`reposData: ${userName}`, JSON.stringify(reposData));
       } catch (error) {
@@ -122,6 +125,8 @@ app.post("/retrieveDb", async (c) => {
    const keyToRetrieve = response;
 
    const retrievedValue = await c.env.DB.get(`${keyToRetrieve}: ${username}`)
+
+   const res = await 
 
    //bring the logic from '/' post route here.
 
