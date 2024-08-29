@@ -16,8 +16,11 @@ export interface Env {
 
 app.use(cors());
 
-app.get("/", (c) => {
-   return c.text("Hello Hono!");
+app.get("/", async (c) => {
+   await c.env.DB.delete("userStargazers: Arvind");
+   const res = await c.env.DB.list();
+   console.log(res);
+   return c.text("Hello, Hono!");
 });
 
 // Get output response from AI model
@@ -34,15 +37,15 @@ app.post("/updateDb", async (c) => {
       userData: object;
       userStargazer: object;
       userEvents: object;
-      userRepos: object
+      userRepos: object;
       // reposData: object;
    } = await c.req.json();
 
    const { userData, userStargazer, userEvents, userRepos } = body;
-   console.log("User Data is: \n", userData)
-   console.log("Stargazer Data is: \n", userStargazer)
-   console.log("Events Data is: \n", userEvents)
-   console.log("Repos Data is: \n", userRepos)
+   // console.log("User Data is: \n", userData);
+   // console.log("Stargazer Data is: \n", userStargazer);
+   // console.log("Events Data is: \n", userEvents);
+   // console.log("Repos Data is: \n", userRepos);
 
    //check if user already exists
    const userName = userData.name;
@@ -92,6 +95,8 @@ app.post("/retrieveDb", async (c) => {
    const query = body.query;
    const username = body.userName;
 
+   console.log("username is: ", username);
+
    // Ask AI to tell you the key to search in the KV store
    const response = await c.env.AI.run("@cf/meta/llama-3-8b-instruct", {
       messages: [
@@ -121,7 +126,7 @@ Examples:
     If the prompt involves activities or events, respond with "userEvents".
     If the prompt involves starred repositories, respond with "userStargazers".
 
-No matter the query, return only one of the three key names mentioned above.`,
+No matter the query, return only one of the three key names mentioned above. And always reply without the quotes.`,
          },
          {
             role: "user",
@@ -131,9 +136,11 @@ No matter the query, return only one of the three key names mentioned above.`,
    });
 
    const keyToRetrieve = response.response;
-   console.log("The key to retrieve is: ", keyToRetrieve);
+   console.log("The key to retrieve is: ", `${keyToRetrieve}: ${username}`);
 
    const retrievedValue = await c.env.DB.get(`${keyToRetrieve}: ${username}`);
+
+   console.log("Retrieved value is: ", retrievedValue);
 
    //bring the logic from '/' post route here.
    const stream = await c.env.AI.run("@hf/mistral/mistral-7b-instruct-v0.2", {

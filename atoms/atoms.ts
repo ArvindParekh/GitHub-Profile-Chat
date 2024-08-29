@@ -15,11 +15,7 @@ export const responseAtom = atom<string>({
    default: "",
 });
 
-export const dataContextAtom = atom<GhData>({
-   key: "dataContextAtom",
-   default: {
-      user: {},
-      stargazers: [],
-      // events: [],
-   },
+export const usernameAtom = atom<string>({
+   key: "usernameAtom",
+   default: "",
 });

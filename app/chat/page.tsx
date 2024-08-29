@@ -1,4 +1,3 @@
-import Chat from "@/components/chat";
 import ChatInput from "@/components/ChatInput";
 import ChatWrapper from "@/components/ChatWrapper";
 

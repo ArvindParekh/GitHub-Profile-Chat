@@ -1,13 +1,13 @@
 "use client";
 
-import { dataContextAtom, promptAtom, responseAtom } from "@/atoms/atoms";
+import { usernameAtom, promptAtom, responseAtom } from "@/atoms/atoms";
 import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, FormEvent } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function ChatInput() {
    const [prompt, setPrompt] = useRecoilState(promptAtom);
-   const data = useRecoilValue(dataContextAtom);
+   const username = useRecoilValue(usernameAtom);
    const setResponse = useSetRecoilState(responseAtom);
 
    async function handleSubmit(e: FormEvent) {
@@ -16,21 +16,16 @@ export default function ChatInput() {
       setResponse("loading");
       const res = await axios.post<string, AxiosResponse<string>>(
          // "https://temp-workers.aruparekh2.workers.dev",
-         "http://localhost:8787",
+         "http://localhost:8787/retrieveDb",
          {
-            memoryData: data,
-            prompt: prompt,
+            userName: username,
+            query: prompt,
          }
       );
 
-
-
-      // console.log(res);
       setResponse(res.data.response);
       setPrompt("");
    }
-
-   console.log("Prompt is: ", prompt);
 
    return (
       <form onSubmit={(e: FormEvent) => handleSubmit(e)}>

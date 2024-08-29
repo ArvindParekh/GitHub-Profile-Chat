@@ -4,7 +4,7 @@ export default function ChatLayout({
    children,
 }: Readonly<{ children: ReactNode }>) {
    return (
-      <div className='flex w-full h-screen'>
+      <div className='flex w-full h-screen p-4'>
          <div className='card bg-base-300 w-[20%] rounded-box grid h-full p-10'>
             Chat threads
          </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import { responseAtom } from "@/atoms/atoms";
+import { memo } from "react";
 import { useRecoilValue } from "recoil";
 
-export default function ChatWrapper() {
+const ChatWrapper = memo(() => {
    const response = useRecoilValue(responseAtom);
 
    return (
@@ -12,8 +13,8 @@ export default function ChatWrapper() {
             <div className='chat chat-start skeleton'>
                <div className='chat-bubble skeleton'></div>
             </div>
-            // <span className='loading loading-dots loading-md'></span>
-         ) : response == "" ? (
+         ) : // <span className='loading loading-dots loading-md'></span>
+         response == "" ? (
             <></>
          ) : (
             <div className={`chat chat-start`}>
@@ -30,4 +31,6 @@ export default function ChatWrapper() {
          )}
       </>
    );
-}
+});
+
+export default ChatWrapper;

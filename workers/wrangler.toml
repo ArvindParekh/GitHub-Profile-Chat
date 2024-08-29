@@ -7,7 +7,7 @@ compatibility_date = "2024-08-23"
 [[kv_namespaces]]
 # binding = "GitHubDatabase"
 binding = "DB"
-id = "6940f7b8725244efbaa5938794fe8e38"
+id = "a4efea82cc6b41c39c44e7ecbdf390f1"
 
 # [[r2_buckets]]
 # binding = "MY_BUCKET"
