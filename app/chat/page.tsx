@@ -1,5 +1,5 @@
-import ChatInput from "@/components/ChatInput";
-import ChatWrapper from "@/components/ChatWrapper";
+import ChatInput from "@/app/components/ChatInput";
+import ChatWrapper from "@/app/components/ChatWrapper";
 
 export default function Chatpage() {
    return (
