@@ -31,7 +31,7 @@ const ChatInput = () => {
    };
 
    return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)} className="w-full">
+      <form onSubmit={handleSubmit} className="w-full">
          <input
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
