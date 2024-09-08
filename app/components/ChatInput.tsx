@@ -5,27 +5,30 @@ import axios, { AxiosResponse } from "axios";
 import { ChangeEvent, FormEvent } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
-export default function ChatInput() {
+const ChatInput = () => {
    const [prompt, setPrompt] = useRecoilState(promptAtom);
    const username = useRecoilValue(usernameAtom);
    const setResponse = useSetRecoilState(responseAtom);
 
-   async function handleSubmit(e: FormEvent) {
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (prompt.trim() === "") return;
 
-      setResponse("loading");
-      const res = await axios.post<string, AxiosResponse<string>>(
-         // "https://temp-workers.aruparekh2.workers.dev",
-         "http://localhost:8787/retrieveDb",
-         {
-            userName: username,
-            query: prompt,
+      try {
+         const res = await axios.post("/api/chat", { prompt });
+         
+         if (res.data && typeof res.data.response === 'string') {
+            setResponse(res.data.response);
+            setPrompt("");
+         } else {
+            console.error("Unexpected response format:", res.data);
+            // Handle the error appropriately, maybe set an error state
          }
-      );
-
-      setResponse(res.data.response);
-      setPrompt("");
-   }
+      } catch (error) {
+         console.error("Error submitting chat:", error);
+         // Handle the error appropriately, maybe set an error state
+      }
+   };
 
    return (
       <form onSubmit={(e: FormEvent) => handleSubmit(e)} className="w-full">
@@ -37,4 +40,6 @@ export default function ChatInput() {
          ></input>
       </form>
    );
-}
+};
+
+export default ChatInput;
