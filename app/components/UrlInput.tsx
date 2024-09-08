@@ -83,17 +83,17 @@ export default function InputComponent() {
       router.push("/chat");
    }
    return (
-      <div className="flex flex-col gap-5 justify-center items-center">
+      <div className="flex flex-col gap-3 md:gap-5 justify-center items-center w-full px-4 md:px-0">
          <input
             type='url'
             placeholder='https://github.com/<username>'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className='input input-bordered w-96 text-white'
+            className='input input-bordered w-full max-w-xs md:w-96 text-white text-sm md:text-base'
          />
-         <button className='btn w-fit' onClick={() => fetchGhData(url)}>
-            Let's chat
+         <button className='btn w-full max-w-xs md:w-fit text-sm md:text-base' onClick={() => fetchGhData(url)}>
+            Let&apos;s chat
          </button>
-      </div >
+      </div>
    );
 }

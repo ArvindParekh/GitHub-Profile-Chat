@@ -8,29 +8,30 @@ const ChatWrapper = memo(() => {
    const response = useRecoilValue(responseAtom);
 
    return (
-      <>
+      <div className="overflow-y-auto flex-grow mb-16">
          {response == "loading" ? (
             <div className='chat chat-start skeleton'>
                <div className='chat-bubble skeleton'></div>
             </div>
-         ) : // <span className='loading loading-dots loading-md'></span>
-         response == "" ? (
+         ) : response == "" ? (
             <></>
          ) : (
             <div className={`chat chat-start`}>
                <div className='chat-image avatar'>
-                  <div className='w-10 rounded-full'>
+                  <div className='w-8 md:w-10 rounded-full'>
                      <img
-                        alt='Tailwind CSS chat bubble component'
+                        alt='GitHub avatar'
                         src='/github.svg'
                      />
                   </div>
                </div>
-               <div className='chat-bubble'>{response}</div>
+               <div className='chat-bubble text-sm md:text-base'>{response}</div>
             </div>
          )}
-      </>
+      </div>
    );
 });
+
+ChatWrapper.displayName = 'ChatWrapper';
 
 export default ChatWrapper;

@@ -28,11 +28,12 @@ export default function ChatInput() {
    }
 
    return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <form onSubmit={(e: FormEvent) => handleSubmit(e)} className="w-full">
          <input
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className='input input-bordered absolute left-0 right-0 mx-10 bottom-10'
+            className='input input-bordered w-full absolute left-0 right-0 mx-auto bottom-4 md:bottom-10 max-w-xs md:max-w-2xl text-sm md:text-base'
+            placeholder="Ask something about the GitHub profile..."
          ></input>
       </form>
    );
