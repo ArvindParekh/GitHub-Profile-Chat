@@ -15,9 +15,12 @@ const ChatInput = () => {
       if (prompt.trim() === "") return;
 
       try {
-         const res = await axios.post("/api/chat", { prompt });
-         
-         if (res.data && typeof res.data.response === 'string') {
+         const res = await axios.post("http://localhost:8787/retrieveDb", {
+            query: prompt,
+            userName: username,
+         });
+
+         if (res.data && typeof res.data.response === "string") {
             setResponse(res.data.response);
             setPrompt("");
          } else {
@@ -31,12 +34,12 @@ const ChatInput = () => {
    };
 
    return (
-      <form onSubmit={handleSubmit} className="w-full">
+      <form onSubmit={handleSubmit} className='w-full'>
          <input
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             className='input input-bordered w-full absolute left-0 right-0 mx-auto bottom-4 md:bottom-10 max-w-xs md:max-w-2xl text-sm md:text-base'
-            placeholder="Ask something about the GitHub profile..."
+            placeholder='Ask something about the GitHub profile...'
          ></input>
       </form>
    );

@@ -6,7 +6,7 @@ function getSingletonInstance() {
    });
 }
 
-const octokit: Octokit = (globalThis as any).octokit ?? getSingletonInstance();
+const octokit: Octokit = (globalThis as any).octokit || getSingletonInstance();
 
 export { octokit };
 if (process.env.NODE_ENV !== "production")

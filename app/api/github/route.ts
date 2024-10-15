@@ -1,4 +1,5 @@
 import { octokit } from "@/octokit-config";
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -18,5 +19,13 @@ export async function POST(req: NextRequest) {
       { username: `${username}`, per_page: 3 }
    );
 
-   return NextResponse.json({ users, repos, events }, { status: 200 });
+   await axios.post("http://localhost:8787/api/github", {
+      users,
+      repos,
+      events,
+   });
+
+   return new NextResponse("done");
+
+   // return NextResponse.json({ users, repos, events }, { status: 200 });
 }
