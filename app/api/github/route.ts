@@ -23,13 +23,9 @@ export async function POST(req: NextRequest) {
 
    const preprocessedData = preprocessData(userData);
 
-   // await axios.post("http://localhost:8787/api/github", {
-   //    users,
-   //    repos,
-   //    events,
-   // });
+   await axios.post("http://localhost:8787/api/github", preprocessedData);
 
-   return NextResponse.json(preprocessedData);
+   return NextResponse.json("Done");
 
    // return NextResponse.json({ users, repos, events }, { status: 200 });
 }

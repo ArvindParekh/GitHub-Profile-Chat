@@ -33,7 +33,7 @@ app.post("/api/github", async (c) => {
    const userData = await c.req.json();
    //    console.log(userData);
 
-   // const preprocessedUserData = 
+   // const preprocessedUserData =
 
    const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: 500,
@@ -151,7 +151,7 @@ app.post("/api/query-from-prompt", async (c) => {
 
    console.log(response);
 
-   return c.text("Done");
+   return c.json(response);
 });
 
 export default app;
