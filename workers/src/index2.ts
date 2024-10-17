@@ -155,3 +155,8 @@ app.post("/api/query-from-prompt", async (c) => {
 });
 
 export default app;
+
+// Current Problems:
+// 1. The database keeps on expanding with every new github user. Need a way to limit that
+// 2. The output is not satisfactory. This is because the embeddings are created from json and not actual textual data. Try processing the json data into textual format and then create embeddings from that and see how the output changes.
+//       Fixed this. Preprocessed the json data and created textual summary of it, which can now be splitted and embeddings can be created.
