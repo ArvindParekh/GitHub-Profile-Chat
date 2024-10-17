@@ -29,16 +29,30 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 app.use(cors());
 
+// app.post("/api/github", async (c) => {
+//    const userData = await c.req.text();
+//    const username = userData.slice(17, 29);
+//    console.log(username);
+//    return c.json(userData);
+// });
+
 app.post("/api/github", async (c) => {
-   const userData = await c.req.json();
+   const userData = await c.req.text();
+   const username = userData.slice(17, 29);
    //    console.log(userData);
 
    // const preprocessedUserData =
 
    const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: 500,
+      separators: ["\n\n", "\n", " ", ""],
    });
-   const output = await splitter.createDocuments([JSON.stringify(userData)]);
+   const output = await splitter.createDocuments([userData]);
+
+   const outputWithMetadata = output.map((doc) => ({
+      ...doc,
+      metadata: { username }, // Adding the username as metadata
+   }));
 
    const embeddings = new GoogleGenerativeAIEmbeddings({
       model: "text-embedding-004", // 768 dimensions
@@ -50,7 +64,7 @@ app.post("/api/github", async (c) => {
       c.env.SUPABASE_API_KEY
    );
 
-   await SupabaseVectorStore.fromDocuments(output, embeddings, {
+   await SupabaseVectorStore.fromDocuments(outputWithMetadata, embeddings, {
       client,
       tableName: "documents",
    });

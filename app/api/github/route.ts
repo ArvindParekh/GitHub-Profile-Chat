@@ -23,9 +23,10 @@ export async function POST(req: NextRequest) {
 
    const preprocessedData = preprocessData(userData);
 
-   // await axios.post("http://localhost:8787/api/github", preprocessedData);
+   await axios.post("http://localhost:8787/api/github", preprocessedData);
 
-   return new NextResponse(preprocessedData);
+   // return new NextResponse(preprocessedData);
+   return new NextResponse("Done");
 
    // return NextResponse.json({ users, repos, events }, { status: 200 });
 }
@@ -96,8 +97,10 @@ function preprocessData(userData) {
    Followers: ${userData.users.followers}.
    Following: ${userData.users.following}.
    Public Repos: ${userData.users.public_repos}.`;
- 
-   const repoSummaries = userData.repos.map((repo, index) => `
+
+   const repoSummaries = userData.repos
+      .map(
+         (repo, index) => `
    Repo Info (${index + 1}):
    Repository: ${repo.name}.
    Description: ${repo.description || "No description provided"}.
@@ -106,26 +109,32 @@ function preprocessData(userData) {
    Created on: ${new Date(repo.created_at).toDateString()}.
    Last updated on: ${new Date(repo.updated_at).toDateString()}.
    Forked: ${repo.fork ? "Yes" : "No"}.
-   `).join('\n');
- 
-   const eventSummaries = userData.events.map((event, index) => `
+   `
+      )
+      .join("\n");
+
+   const eventSummaries = userData.events
+      .map(
+         (event, index) => `
    Event Info (${index + 1}):
    Event Type: ${event.type}.
    Repository: ${event.repo.name}.
    Commits: ${
-     event.payload.commits
-       ? event.payload.commits.map((commit) => commit.message).join(", ")
-       : "No commits"
+      event.payload.commits
+         ? event.payload.commits.map((commit) => commit.message).join(", ")
+         : "No commits"
    }.
-   Event created on: ${new Date(event.created_at).toDateString()}.`).join('\n');
- 
+   Event created on: ${new Date(event.created_at).toDateString()}.`
+      )
+      .join("\n");
+
    return `
-   ${userSummary}
-   ${repoSummaries}
-   ${eventSummaries}
-   `;
- }
- 
+      Username: ${userData.users.login}
+      ${userSummary}
+      ${repoSummaries}
+      ${eventSummaries}`;
+}
+
 /*
    Data format:
 
