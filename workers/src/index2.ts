@@ -75,6 +75,7 @@ app.post("/api/github", async (c) => {
 
 app.post("/api/query-from-prompt", async (c) => {
    console.log("hehehrehre");
+   const { query, userName } = await c.req.json();
 
    // creating the standalone question from user's prompt
    //    const llm = new ChatGoogleGenerativeAI({
@@ -160,7 +161,8 @@ app.post("/api/query-from-prompt", async (c) => {
 
    const response = await chain.invoke({
       question:
-         "I would like to know how many people are following the user. Also, I'd like to know what projects the user is currently working on and which organization he has contributed the most to.",
+         // "I would like to know how many people are following the user. Also, I'd like to know what projects the user is currently working on and which organization he has contributed the most to.",
+         query,
    });
 
    console.log(response);

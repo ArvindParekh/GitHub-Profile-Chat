@@ -15,7 +15,7 @@ const ChatInput = () => {
       if (prompt.trim() === "") return;
 
       try {
-         const res = await axios.post("http://localhost:8787/retrieveDb", {
+         const res = await axios.post("http://localhost:8787/api/query-from-prompt", {
             query: prompt,
             userName: username,
          });

@@ -69,14 +69,14 @@ export default function InputComponent() {
          events: userEvents,
       } = fetchData.data;
 
-      const res = await axios.post("http://localhost:8787/updateDb", {
+      const res = await axios.post("http://localhost:8787/api/github", {
          userData,
          // userStargazer,
          userEvents,
          userRepos,
       });
 
-      setUsername(userData.name);
+      // setUsername(userData.name);
 
       console.log(res);
 

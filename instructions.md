@@ -29,6 +29,36 @@ Navigating and understanding a GitHub profile's vast amount of data can be overw
 - **Retrieval-Augmented Generation (RAG)**: Optimized AI interactions for handling large-scale data efficiently using LangChain.js.
 - **Enhanced Data Processing**: Preprocesses GitHub data into textual summaries for better embeddings and more accurate AI responses.
 
+## Application Flow
+
+### 1. GitHub Profile Input
+- User enters a GitHub profile URL (e.g., "https://github.com/ArvindParekh") on the homepage
+- Application sends a POST request to `/api/github` endpoint of the Cloudflare Worker
+- User is redirected to the chat interface
+
+### 2. Data Processing & Storage
+- Cloudflare Worker processes the GitHub profile data:
+  1. Splits user data into manageable chunks using `RecursiveCharacterTextSplitter`
+  2. Creates embeddings from these chunks using Google's Generative AI
+  3. Stores embeddings in Supabase vector store with associated metadata
+
+### 3. Chat Interface
+- User can ask questions about the GitHub profile
+- Each question triggers a POST request to `/api/query-from-prompt` endpoint
+- The query processing follows a RAG (Retrieval-Augmented Generation) approach:
+  1. Creates a standalone question from user's prompt using LangChain
+  2. Generates embeddings for the standalone question
+  3. Queries Supabase vector store to retrieve relevant GitHub profile information
+  4. Combines retrieved information with the original question
+  5. Generates a natural, context-aware response using AI
+
+### 4. Response Generation
+- AI provides friendly, conversational responses based on:
+  - Retrieved GitHub profile data
+  - Original user question
+  - Predefined response template
+- If information is not available, directs users to contact the creator
+
 ### Unique Implementation Aspects
 
 - **Cloudflare KV Store**: Efficiently stores and retrieves GitHub data, enabling quick access and scalability.
